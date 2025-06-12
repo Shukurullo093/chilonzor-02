@@ -422,10 +422,11 @@ legend{
     padding-bottom: 15px;
 }
 .middle-left {
-    top: 50%;
+    top: 40%;
+    padding-bottom: 1rem;
 }
 .bottom-left {
-    top: 65%;
+    top: 55%;
 }
 .bottom-middle{
     top: 70%;
