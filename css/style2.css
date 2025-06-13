@@ -163,11 +163,31 @@ main .col-12{
 
 .left-box {
     width: 59%;
+    /* height: ; */
     background: radial-gradient(circle, #1a1f2a, #28396b);
 }
 .right-box{
     width: 40%;
     background: radial-gradient(circle, #1a1f2a, #28396b);
+}
+.right-box.fullscreen {
+    width: 100% !important;
+    height: calc(100vh - 100px) !important;
+    position: relative;
+    z-index: 1000;
+}
+.fa-expand,
+.fa-compress{
+    position: absolute;
+    top: .5rem;
+    right: .5rem;
+    color: white;
+    transition: .3s ease all;
+}
+.fa-expand:hover,
+.fa-compress:hover{
+    cursor: pointer;
+    transform: scale(1.1);
 }
 .d-flex-row {
     display: flex;
@@ -449,7 +469,6 @@ legend{
 .bottom-left .d-flex,
 .bottom-middle .d-flex,
 .bottom-right .d-flex{
-    /* width: 85%; */
     background: radial-gradient(circle, #28396b, #6b7bac);
 }
 .middle-left .d-flex strong,
@@ -463,4 +482,7 @@ legend{
 .bottom-middle strong,
 .bottom-right strong{
     font-size: 9px;
+}
+.close-div{
+    display: none;
 }

@@ -516,6 +516,47 @@
                 </div>           
             </div>
             <div class="right-box border position-relative">
+                <i id="fullScreen" class="fa-solid fa-expand"></i>
+                <div id="tab2" class="row d-none m-2 mt-5">
+                    <div class="d-none col-12">
+                        <div class="col-1"><span>Bektemir</span></div>
+                        <div class="col-1"><span>Olmazor</span></div>
+                        <div class="col-1"><span>Uchtepa</span></div>
+                        <div class="col-1"><span>Mirobod</span></div>
+                        <div class="col-1"><span>Sergeli</span></div>
+                        <div class="col-1"><span>Yunusobod</span></div>
+                        <div class="col-1"><span>Yangihayot</span></div>
+                        <div class="col-1"><span>Shayhontohur</span></div>
+                        <div class="col-1"><span>Chilonzor</span></div>
+                        <div class="col-1"><span>Yakkasaroy</span></div>
+                        <div class="col-1"><span>Yashnaobod</span></div>
+                        <div class="col-1"><span>Mirzo Ulug'bek</span></div>
+                    </div>
+                    <div class="col-8">
+                        <div class="mx-auto d-flex gap-2 px-5">
+                            <select id="yearSelect" class="form-control"></select>
+                            <select id="monthSelect" class="form-control">
+                                <option value="01">Yanvar</option>
+                                <option value="02">Fevral</option>
+                                <option value="03">Mart</option>
+                                <option value="04">Aprel</option>
+                                <option value="05">May</option>
+                                <option value="06">Iyun</option>
+                                <option value="07">Iyul</option>
+                                <option value="08">Avgust</option>
+                                <option value="09">Sentabr</option>
+                                <option value="10">Oktabr</option>
+                                <option value="11">Noyabr</option>
+                                <option value="12">Dekabr</option>
+                            </select>
+                            <button id="resetChartBtn" class="btn btn-outline-primary align-items-center gap-2" style="display: none;"><i class="fa-solid fa-reply mr-2"></i> Ortga</button>
+                        </div>                        
+                        <div id="crime_types_date"></div>
+                    </div>
+                    <div class="col-4">
+                        <div id="chilonzor_map" style="width: 100%; height: 600px;"></div>
+                    </div>
+                </div>
                 <div id="map"></div>
                 <div class="top-left">
                     <h6 class="text-uppercase fw-bold mb-0 text-light text-center">содир этилган жиноятлар</h6>
@@ -613,10 +654,13 @@
         </div>        
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="offline_modules/yandex-map" type="text/javascript"></script>
     <script src="offline_modules/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
     <script src="offline_modules/chart.js"></script>
     <script src="offline_modules/chartjs-plugin-datalabels"></script>
+    <script src="js/data3.js"></script>
+    <script src="js/chilonzor-map.js"></script>
     <script src="js/script2.js"></script>
     <script src="js/data2.js"></script>
     <script src="js/map2.js"></script>
