@@ -1454,7 +1454,7 @@ function filterByDistrict(districtName) {
 function updateMapColors(selectedCrimeType) {    
     // Har bir tumandagi shu jinoyat sonini hisoblaymiz
     const countsByDistrict = {};
-
+    // 2024-25 yilar bo'yicha yig'ayabdi, tanlangan yil va oy bo'lishi kk
     data3.forEach(item => {
         if (item.crime_type === selectedCrimeType) {
             const district = item.neighborhood;
@@ -1466,17 +1466,15 @@ function updateMapColors(selectedCrimeType) {
     });
     console.log(countsByDistrict);
     
-
     // Max countni topamiz (rang uchun)
     const maxCount = Math.max(...Object.values(countsByDistrict));
-    console.log(maxCount);
+    console.log('max', maxCount);
     // faqat borlarini ichidan qidirish kk, max qiymat yo'q mahallani ichida ham bolishi mumkin,
     // max qiymatni faqat bor mahallalar ichidan olish kk
+    // data3 massivi ichida xaritada yo'q mahallalar mavjud, agar ularni qiymati maxga erishsa, xarita to'liq qizarmaydi
     
     // Rangni hisoblovchi funksiya: yashildan qizilgacha
-    function getColor(count) {
-        console.log(count);
-        
+    function getColor(count) {       
         const ratio = count / maxCount;
         const red = Math.floor(255 * ratio);
         const green = Math.floor(255 * (1 - ratio));
@@ -1487,7 +1485,6 @@ function updateMapColors(selectedCrimeType) {
     districtPolygons.forEach(dp => {  
         const key = Object.keys(countsByDistrict).find(k => normalizeString(k).includes(normalizeString(dp.name)));
         const count = key ? countsByDistrict[key] : 0;
-        // console.log(count);
         
         const color = count === 0 ? '#e0e0e0' : getColor(count);
         

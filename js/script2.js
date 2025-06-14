@@ -65,6 +65,12 @@ const yearSelect = document.getElementById('yearSelect');
 const monthSelect = document.getElementById('monthSelect');
 const resetBtn = document.getElementById('resetChartBtn');
 
+// function getUniqueValues(arr, key) {
+//   return [...new Set(arr.map(item => item[key]))];
+// }
+// const uniqueNames = getUniqueValues(data3, 'neighborhood'); 
+// console.log('mahallalar', uniqueNames);
+
 let chart;
 let fullMonthlyData = []; // to‘liq oylik ma’lumotlar
 
