@@ -42,6 +42,7 @@ plugins: [ChartDataLabels]
 
 window.addEventListener('load', function() {
     updateProgressBars();
+    this.localStorage.setItem('rP', 3);
 });
 
 function updateProgressBars() {
@@ -248,7 +249,7 @@ document.getElementById('fullScreen').addEventListener('click', function () {
     this.classList.toggle('fa-compress');
     const parentElement = this.parentNode.parentNode;
     if (parentElement) {
-        if (localStorage.getItem('rP')==='3' || !localStorage.getItem('rP')) {
+        if (localStorage.getItem('rP') === '3' || !localStorage.getItem('rP')) {
             parentElement.insertBefore(this.parentNode, parentElement.firstChild);
             localStorage.setItem('rP', 1)
         } else {
