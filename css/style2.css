@@ -495,3 +495,302 @@ legend{
 .close-div{
     display: none;
 }
+
+/* Crime Timeline Chart Styles */
+#crimeChartContainer {
+    width: 100%;
+    background: rgba(30, 60, 114, 0.7);
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 10px;
+  }
+  
+  #crimeTimelineChart {
+    height: 300px;
+    width: 100%;
+  }
+  
+  .crime-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .crime-category {
+    background: rgba(40, 57, 107, 0.8);
+    border-radius: 6px;
+    padding: 10px;
+    border-left: 4px solid #e74c3c;
+  }
+  
+  .crime-category h4 {
+    color: #ffe082;
+    font-size: 14px;
+    margin-bottom: 8px;
+    border-bottom: 1px dashed #556d8f;
+    padding-bottom: 5px;
+  }
+  
+  .crime-stat {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 12px;
+  }
+  
+  .crime-stat .label {
+    color: #bdc3c7;
+  }
+  
+  .crime-stat .value {
+    color: #f1c40f;
+    font-weight: bold;
+  }
+  
+  .apexcharts-tooltip {
+    background: #1e222b !important;
+    border: 1px solid #3498db !important;
+    color: white !important;
+  }
+  
+  .apexcharts-tooltip-title {
+    background: #28396b !important;
+    border-bottom: 1px solid #3498db !important;
+  }
+  
+  .apexcharts-menu {
+    background: #1e222b !important;
+    border: 1px solid #3498db !important;
+  }
+  
+  .apexcharts-menu-item {
+    color: white !important;
+  }
+  
+  .apexcharts-menu-item:hover {
+    background: #28396b !important;
+  }
+
+
+  /* Yangi filterlar uchun stil */
+#crime_types_date {
+    background: rgba(30, 60, 114, 0.7);
+    border-radius: 8px;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.form-control {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 255, 255, 0.3);
+    color: white;
+}
+
+.form-control:focus {
+    background: rgba(0, 0, 0, 0.8);
+    border-color: #00ffff;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+    color: white;
+}
+
+/* Legend uchun scroll */
+/* Jinoyat turlari ro'yxati uchun yangi stil */
+.apexcharts-legend {
+    max-height: 500px !important; /* Oldingi 200px o'rniga 300px */
+    overflow-y: auto !important;
+    padding-right: 10px;
+    width: 300px !important;
+    background: rgba(30, 60, 114, 0.7);
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 20px;
+    border: 1px solid rgba(0, 255, 255, 0.3);
+}
+
+.apexcharts-legend-series {
+    display: flex !important;
+    align-items: center !important;
+    margin-bottom: 8px !important;
+    padding: 3px 5px !important;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
+.apexcharts-legend-series:hover {
+    background: rgba(0, 255, 255, 0.1) !important;
+}
+
+.apexcharts-legend-marker {
+    margin-right: 8px !important;
+    /* border: 1px solid rgba(255, 255, 255, 0.5) !important; */
+}
+
+.apexcharts-legend-text {
+    color: #fff !important;
+    font-family: 'Orbitron', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.5px;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    max-width: none !important;
+}
+
+/* Scrollbar uchun stil */
+.apexcharts-legend::-webkit-scrollbar {
+    width: 6px;
+}
+
+.apexcharts-legend::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+}
+
+.apexcharts-legend::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.apexcharts-legend::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 255, 255, 0.5);
+}
+
+/* Modern modal container */
+.modal-content {
+  border-radius: 1rem;
+  border: none;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Modal header styling */
+.modal-header {
+  background: linear-gradient(90deg, #2c3e50, #4ca1af);
+  color: white;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+  padding: 1rem 1.5rem;
+}
+
+/* Modal title */
+.modal-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+/* Close button */
+.btn-close {
+  filter: invert(1);
+}
+
+/* Modal body */
+.modal-body {
+  background-color: #f9f9f9;
+  padding: .5rem 1rem;
+}
+
+/* Section headings */
+.modal-body strong.text-center {
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #2c3e50;
+  text-transform: uppercase;
+}
+
+/* Subsection title */
+.modal-body > strong:not(.text-center),
+.modal-body > b {
+  font-size: .8rem;
+  color: #333;
+  margin-top: 1.5rem;
+  display: block;
+}
+
+/* Table styling */
+.table {
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: .2rem;
+  background: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.table thead {
+  background-color: #2c3e50;
+  color: white;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.table th,
+.table td {
+  padding: 0.45rem 1rem;
+  vertical-align: middle;
+  font-size: 1rem;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f1f1f1;
+}
+
+/* Inner list styles */
+ul {
+  margin-left: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 3px 4px 12px rgba(0, 0, 0, 0.5);
+  padding: .5rem;
+  border-radius: 10px;
+}
+
+ul li,
+ul ul li {
+  margin-bottom: 0.55rem;
+  font-size: 1rem;
+  color: #444;
+}
+
+/* Nested list style */
+ul ul {
+  margin-top: 0.5rem;
+  padding-left: 1.25rem;
+}
+
+/* Nested h3 */
+.modal-body h3 {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Prediction table header */
+#predictionTable thead {
+  background-color: #4ca1af;
+  color: white;
+}
+
+/* Responsive tweaks */
+@media (max-width: 576px) {
+  .modal-body {
+    padding: 1rem;
+  }
+
+  .table th, .table td {
+    padding: 0.5rem;
+  }
+
+  .modal-title {
+    font-size: 1rem;
+  }
+
+  .modal-header {
+    padding: 0.75rem 1rem;
+  }
+}

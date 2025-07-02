@@ -533,7 +533,7 @@
                         <div class="col-1"><span>Yashnaobod</span></div>
                         <div class="col-1"><span>Mirzo Ulug'bek</span></div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-12">
                         <div class="mx-auto d-flex gap-2 px-5">
                             <select id="yearSelect" class="form-control"></select>
                             <select id="monthSelect" class="form-control">
@@ -606,12 +606,12 @@
                                 <option value="53">Yakkatut</option>
                                 <option value="54">Beshqo'rg'on</option>
                             </select>
-
                             <button id="resetChartBtn" class="btn btn-outline-primary align-items-center gap-2" style="display: none;"><i class="fa-solid fa-reply mr-2"></i> Ortga</button>
                         </div>                        
                         <div id="crime_types_date"></div>
+                        <div id="crime_types_date_neighborhood"></div>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3 d-none">
                         <div id="chilonzor_map" style="width: 100%; height: 600px;"></div>
                     </div>
                 </div>
@@ -702,6 +702,83 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="legendModal" tabindex="-1" aria-labelledby="legendModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="legendModalLabel">Жиноят диагностикаси</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Yopish"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <h5 class="text-center fw-bold text-uppercase mb-3 text-primary">Bashorat qilingan jinoyatlar</h5>
+                    <table id="predictionTable" class="table">
+                        <thead>
+                            <tr>
+                                <th>Tuman</th>
+                                <th>Bashorat Qilingan Jinoyat Turi</th>
+                                <th>Xavf Darajasi</th>
+                                <th>Xavfli Vaqt Oraligi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="predictionBody">
+                        </tbody>
+                    </table>
+                    <strong class="text-center text-primary">Vaqt bo'yicha diagnostika</strong>
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Vaqt oralig'i</th>
+                                <th scope="col">Jinoyatlar soni</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td scope="row">Tun (00:00-06:00)</td>
+                                <td id="time_0_6">Mark</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Ertalab (06:00-12:00)</td>
+                                <td id="time_6_12">Jacob</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Kunduzi (12:00-18:00)</td>
+                                <td id="time_12_18">Larry</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Kechqurun (18:00-24:00)</td>
+                                <td id="time_18_24">Larry</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <h5 class="text-center fw-bold text-uppercase" style="color: rgb(12, 95, 151);">Jinoyatlarning oldini olish choralari</h5>
+                    <!-- <b>Tavsiya Etilgan Oldini Olish Choralari</b> -->
+                    <ul class="list-unstyled p-3">
+                        <li><strong class="bg-danger rounded p-1 text-light fs-5" id="time_period"></strong> vaqtida politsiya patrullarini ko'paytirish, 
+                            maktablar va mahalla markazlarida giyohvandlik haqida ogohlantirish kampaniyalarini o'tkazish, 
+                            shuningdek, mahalla posbonlik dasturlarini joriy etish.
+                        </li>
+                        <li><strong class="district-tag bg-success rounded p-1 text-light fs-5">Chilonzor</strong> - eng ko'p jinoyat sodir bo'ladigan tuman (<b>34</b> ta hodisa).</li>
+                        <li>
+                            <h3 class="text-uppercase text-center">Umumiy Oldini Olish Choralari</h3>
+                            <ul class="list-unstyled px-3">
+                                <li>Mahalliylashtirilgan politsiya xizmati dasturlarini joriy etish</li>
+                                <li>Fuqarolar jinoyatlar va shubhali harakatlar haqida anonim xabar berish uchun mobil ilovalarni ishlab chiqish</li>
+                                <li>Jinoyat ko'p sodir bo'ladigan joylarga qo'shimcha kuzatuv kameralarini o'rnatish</li>
+                                <li>Xavfsizlik muammolari va ularning yechimlari muhokamasi uchun muntazam mahalla yig'ilishlarini o'tkazish</li>
+                                <li>Xavf ostidagi yoshlar uchun kasbiy ta'lim va ish bilan ta'minlash dasturlarini tashkil etish</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- <div class="chart-container"> -->
+                    
+                <!-- </div> -->
+                </div>
+            </div>
+        </div>
     </div>
     
     <footer class="d-none">

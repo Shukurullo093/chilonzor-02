@@ -1268,7 +1268,6 @@ function init() {
 
     // console.log(districtPolygons);
     
-
     function createDistrictPolygon(coordinates, name, area) {
         var polygon = new ymaps.Polygon([coordinates], {
             balloonContent: `

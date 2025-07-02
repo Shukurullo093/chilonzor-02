@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vis.js 3D Bar Chart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .chart-container {
+            padding: 30px;
+            background: #f8f9fa;
+        }
+        
+        #visualization {
+            width: 100%;
+            height: 600px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .control-group label {
+            font-weight: 500;
+            color: #495057;
+            font-size: 0.9em;
+        }
+        
+        .control-group button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .control-group button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .info-panel {
+            background: #e3f2fd;
+            padding: 20px;
+            margin: 20px 30px;
+            border-radius: 10px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .info-panel h3 {
+            margin: 0 0 10px 0;
+            color: #1976d2;
+        }
+        
+        .info-panel p {
+            margin: 5px 0;
+            color: #424242;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- <div class="header">
+            <h1>📊 3D Bar Chart</h1>
+            <p>Vis.js yordamida yaratilgan interaktiv 3D diagramma</p>
+        </div> -->
+        
+        <div class="chart-container">
+            <div id="visualization"></div>
+            
+            <div class="controls">
+                <div class="control-group">
+                    <label>Ma'lumotlar</label>
+                    <button onclick="generateRandomData()">Yangi Ma'lumotlar</button>
+                </div>
+                <div class="control-group">
+                    <label>Ko'rinish</label>
+                    <button onclick="resetView()">Boshlang'ich Ko'rinish</button>
+                </div>
+                <div class="control-group">
+                    <label>Animatsiya</label>
+                    <button onclick="animateChart()">Animatsiya</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="info-panel">
+            <h3>🎮 Boshqaruv:</h3>
+            <p><strong>Sichqoncha:</strong> Diagrammani aylantirish uchun sichqonchani bosib torting</p>
+            <p><strong>G'ildirak:</strong> Masshtablash uchun g'ildirakning ustiga bosing</p>
+            <p><strong>Tugmalar:</strong> Yangi ma'lumotlar yaratish va ko'rinishni o'zgartirish</p>
+        </div>
+    </div>
+
+    <script>
+        // Ma'lumotlar to'plami
+        let data = null;
+        let graph3d = null;
+
+        // Boshlang'ich ma'lumotlarni yaratish
+        function createInitialData() {
+            const data = new vis.DataSet();
+            const categories = ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun'];
+            const products = ['Mahsulot A', 'Mahsulot B', 'Mahsulot C', 'Mahsulot D'];
+            
+            let counter = 0;
+            // Har bir oy uchun barcha mahsulotlarni qo'shish
+            for (let x = 0; x < categories.length; x++) {
+                for (let y = 0; y < products.length; y++) {
+                    const value = Math.floor(Math.random() * 100) + 10;
+                    data.add({
+                        id: counter++,
+                        x: x,
+                        y: y,
+                        z: value,
+                        style: value
+                    });
+                }
+            }
+            
+            return data;
+        }
+
+        // Tasodifiy ma'lumotlar yaratish
+        function generateRandomData() {
+            data.clear();
+            const categories = ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun'];
+            const products = ['Mahsulot A', 'Mahsulot B', 'Mahsulot C', 'Mahsulot D'];
+            
+            let counter = 0;
+            // Har bir oy uchun barcha mahsulotlarni qo'shish
+            for (let x = 0; x < categories.length; x++) {
+                for (let y = 0; y < products.length; y++) {
+                    const value = Math.floor(Math.random() * 150) + 5;
+                    data.add({
+                        id: counter++,
+                        x: x,
+                        y: y,
+                        z: value,
+                        style: value
+                    });
+                }
+            }
+        }
+
+        // Ko'rinishni qayta o'rnatish
+        function resetView() {
+            const cameraPosition = {
+                horizontal: 1.0,
+                vertical: 0.5,
+                distance: 1.7
+            };
+            graph3d.setCameraPosition(cameraPosition);
+        }
+
+        // Animatsiya
+        function animateChart() {
+            let step = 0;
+            const maxSteps = 50;
+            
+            const animate = () => {
+                if (step < maxSteps) {
+                    const angle = (step / maxSteps) * Math.PI * 2;
+                    const cameraPosition = {
+                        horizontal: angle,
+                        vertical: 0.3,
+                        distance: 1.5
+                    };
+                    graph3d.setCameraPosition(cameraPosition);
+                    step++;
+                    setTimeout(animate, 50);
+                }
+            };
+            
+            animate();
+        }
+
+        // Diagrammani yaratish
+        function createChart() {
+            const container = document.getElementById('visualization');
+            
+            // Sozlamalar
+            const options = {
+                width: '100%',
+                height: '600px',
+                style: 'bar-color',
+                showPerspective: true,
+                showGrid: true,
+                showShadow: true,
+                keepAspectRatio: false,
+                verticalRatio: 0.35,
+                backgroundColor: '#ffffff',
+                
+                // O'qlar sozlamalari
+                xLabel: 'Oylar',
+                yLabel: 'Mahsulotlar', 
+                zLabel: 'Qiymat',
+                
+                // Ranglar
+                xBarWidth: 0.8,
+                yBarWidth: 0.8,
+                
+                // Kamera pozitsiyasi
+                cameraPosition: {
+                    horizontal: 1.0,
+                    vertical: 0.5,
+                    distance: 1.7
+                },
+                
+                // Tooltip
+                tooltip: function (point) {
+                    const months = ['Yanvar', 'Fevral', 'Mart', 'Aprel', 'May', 'Iyun'];
+                    const products = ['Mahsulot A', 'Mahsulot B', 'Mahsulot C', 'Mahsulot D'];
+                    return `<div style="padding: 10px; background: rgba(0,0,0,0.8); color: white; border-radius: 5px;">
+                        <strong>${months[point.x]}</strong><br>
+                        ${products[point.y]}<br>
+                        Qiymat: <strong>${point.z}</strong>
+                    </div>`;
+                }
+            };
+
+            // Diagrammani yaratish
+            data = createInitialData();
+            graph3d = new vis.Graph3d(container, data, options);
+        }
+
+        // Sahifa yuklanganda diagrammani yaratish
+        window.addEventListener('load', function() {
+            createChart();
+        });
+
+        // Responsive design uchun
+        window.addEventListener('resize', function() {
+            if (graph3d) {
+                graph3d.redraw();
+            }
+        });
+    </script>
+</body>
+</html>
