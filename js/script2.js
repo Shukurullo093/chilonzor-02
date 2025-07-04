@@ -525,7 +525,6 @@ document.getElementById('fullScreen').addEventListener('click', function () {
     });
 });
 
-
 // Crime Timeline Chart Implementation
 function initializeCrimeTimelineChart() {
     // Sample data - replace with your actual crime data

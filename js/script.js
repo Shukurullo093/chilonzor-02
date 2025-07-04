@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
         'Iyul', 'Avgust', 'Sentabr', 'Oktabr', 'Noyabr', 'Dekabr'
     ];
 
+    // this.localStorage.setItem('rP', 3);
+
     function parseDate(dateStr) {
         const [day, month, year] = dateStr.split('.');
         return new Date(year, month - 1, day);
@@ -2869,3 +2871,7 @@ function init() {
     map.geoObjects.add(myPolygon);
     // map.container.enterFullscreen();
 }
+
+window.addEventListener('load', function() {
+  this.localStorage.setItem('rP', 3);
+});
