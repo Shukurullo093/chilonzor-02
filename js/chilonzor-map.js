@@ -1,6 +1,7 @@
 ymaps.ready(init);
       
-const districtPolygons = [];
+let districtPolygons = [];
+
 function init() {
     var map = new ymaps.Map("chilonzor_map", {
         center: [41.27060103232188, 69.20635608472475], // Chilonzor centre
@@ -1265,8 +1266,6 @@ function init() {
             map.geoObjects.add(neighborhoods[key].polygon);                                    
         }
     }
-
-    // console.log(districtPolygons);
     
     function createDistrictPolygon(coordinates, name, area) {
         var polygon = new ymaps.Polygon([coordinates], {
@@ -1515,7 +1514,6 @@ function normalizeString(str) {
         .split('')
         .map(char => map[char] || char)
         .join('')
-        .replace(/[\s’']/g, '') // bo‘shliq va apostroflarni olib tashlaymiz
+        .replace(/[\s’‘']/g, '') // bo‘shliq va apostroflarni olib tashlaymiz
         .toLowerCase();
 }
-

@@ -85,13 +85,13 @@ years.forEach(year => {
 });
 
 crime_types = [
-    'Гийовандлик воситалари, уларнинг аналоглари йоки психотроп моддаларни ўтказиш мақсадини кўзлаб қонунга хилоф равишда таййорлаш, олиш, сақлаш ва бошқа ҳаракатлар қилиш, шунингдэк уларни қонунга хилоф равишда ўтказиш',
-    'Товламачилик',
-    'Пора олиш',
-    'Пора бериш',
-    'Кучли таъсир қилувчи ёки заҳарли моддаларни қонунга хилоф равишда эгаллаш',
-    'Қўшмачилик қилиш йоки фоҳишахона сақлаш ',
-    ''
+  'Гийовандлик воситалари, уларнинг аналоглари йоки психотроп моддаларни ўтказиш мақсадини кўзлаб қонунга хилоф равишда таййорлаш, олиш, сақлаш ва бошқа ҳаракатлар қилиш, шунингдэк уларни қонунга хилоф равишда ўтказиш',
+  'Товламачилик',
+  'Пора олиш',
+  'Пора бериш',
+  'Кучли таъсир қилувчи ёки заҳарли моддаларни қонунга хилоф равишда эгаллаш',
+  'Қўшмачилик қилиш йоки фоҳишахона сақлаш ',
+  ''
 ]
 
 const uzbekMonths = [
@@ -146,190 +146,192 @@ function getMonthYear(dateStr) {
 // console.log(groupedCounts);
 
 function renderChart(filteredData) {
-    // Ma'lumotlarni oylik va jinoyat turi bo'yicha guruhlash
-    let monthlyCrimeCounts = filteredData.reduce((acc, item) => {
-        const monthYear = getMonthYear(item.date);
-        const crime = item.crime_type;
-        if (!acc[monthYear]) acc[monthYear] = {};
-        if (!acc[monthYear][crime]) acc[monthYear][crime] = 0;
-        acc[monthYear][crime] += 1;
-        return acc;
-    }, {});
+  // Ma'lumotlarni oylik va jinoyat turi bo'yicha guruhlash
+  let monthlyCrimeCounts = filteredData.reduce((acc, item) => {
+    const crime = item.crime_type;
+    if (!crime) return acc; // undefined yoki false qiymatlarni o'tkazib yuborish
 
-    // Oylarni tartiblash
-    const sortedMonthlyCrimeCounts = Object.entries(monthlyCrimeCounts)
-        .sort(([a], [b]) => uzbekMonths.indexOf(a) - uzbekMonths.indexOf(b));
-    
-    monthlyCrimeCounts = Object.fromEntries(sortedMonthlyCrimeCounts);
+    const monthYear = getMonthYear(item.date);
 
-    // Jinoyat turlarini olish (faqat eng ko'p sodir bo'lgan 10 tasi)
-    const crimeCounts = {};
-    Object.values(monthlyCrimeCounts).forEach(monthData => {
-        Object.entries(monthData).forEach(([crime, count]) => {
-            if (!crimeCounts[crime]) crimeCounts[crime] = 0;
-            crimeCounts[crime] += count;
-        });
-    });
+    if (!acc[monthYear]) acc[monthYear] = {};
+    if (!acc[monthYear][crime]) acc[monthYear][crime] = 0;
+    acc[monthYear][crime] += 1;
 
-    // Eng ko'p sodir bo'lgan 10 ta jinoyat turi
-    const topCrimes = Object.entries(crimeCounts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 10)
-        .map(item => item[0]);
+    return acc;
+  }, {});
 
-    // Faqat top jinoyatlar uchun ma'lumotlarni filtrlash
-    const filteredMonthlyCrimeCounts = {};
-    Object.keys(monthlyCrimeCounts).forEach(month => {
-        filteredMonthlyCrimeCounts[month] = {};
-        topCrimes.forEach(crime => {
-            if (monthlyCrimeCounts[month][crime]) {
-                filteredMonthlyCrimeCounts[month][crime] = monthlyCrimeCounts[month][crime];
-            }
-        });
-    });
+  // Oylarni tartiblash
+  const sortedMonthlyCrimeCounts = Object.entries(monthlyCrimeCounts)
+      .sort(([a], [b]) => uzbekMonths.indexOf(a) - uzbekMonths.indexOf(b));
+  
+  monthlyCrimeCounts = Object.fromEntries(sortedMonthlyCrimeCounts);
 
-    // Oylar (x axis uchun)
-    const months = Object.keys(filteredMonthlyCrimeCounts);
+  // Jinoyat turlarini olish (faqat eng ko'p sodir bo'lgan 10 tasi)
+  const crimeCounts = {};
+  Object.values(monthlyCrimeCounts).forEach(monthData => {
+      Object.entries(monthData).forEach(([crime, count]) => {
+          if (!crimeCounts[crime]) crimeCounts[crime] = 0;
+          crimeCounts[crime] += count;
+      });
+  });
 
-    // Series uchun data tayyorlash
-    const series = topCrimes.map(crime => ({
-        name: crime.length > 30 ? crime.substring(0, 30) + '...' : crime,
-        data: months.map(month => filteredMonthlyCrimeCounts[month][crime] || 0)
-    }));
+  // Eng ko'p sodir bo'lgan 10 ta jinoyat turi
+  const topCrimes = Object.entries(crimeCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(item => item[0]);
 
-    // ApexCharts options
-    const options = {
-        chart: {
-            type: 'line',
-            height: 600,
-            zoom: {
-                enabled: true
-            },
-            toolbar: {
-                tools: {
-                    download: false,
-                    selection: true,
-                    zoom: false,
-                    zoomin: false,
-                    zoomout: false,
-                    pan: false,
-                    reset: false
-                }
-            },
-            events: {
-                // mounted: function(ctx, config) {
-                //     const legend = ctx.el.querySelector('.apexcharts-legend');
-                //     if (legend) {
-                //         legend.style.minHeight = '500px';
-                //         legend.style.maxHeight = '500px';
-                //         legend.style.overflowY = 'auto';
-                //     }
-                // },
-                legendClick: function(chartContext, seriesIndex, config) {
-                  const fullSeriesName = config.config.series[seriesIndex].name;
-                  aiAdvice('fghg');
-                  // console.log(fullSeriesName);
-                  
-                  // Modalga chiqarish
-                  // document.getElementById('modalBody').innerText = fullSeriesName;
+  // Faqat top jinoyatlar uchun ma'lumotlarni filtrlash
+  const filteredMonthlyCrimeCounts = {};
+  Object.keys(monthlyCrimeCounts).forEach(month => {
+      filteredMonthlyCrimeCounts[month] = {};
+      topCrimes.forEach(crime => {
+          if (monthlyCrimeCounts[month][crime]) {
+              filteredMonthlyCrimeCounts[month][crime] = monthlyCrimeCounts[month][crime];
+          }
+      });
+  });
 
-                  const myModal = new bootstrap.Modal(document.getElementById('legendModal'));
-                  myModal.show();
+  // Oylar (x axis uchun)
+  const months = Object.keys(filteredMonthlyCrimeCounts);
 
-                  return false; // chiziqni yashirishni bloklash
-                }
-            }
+  // Series uchun data tayyorlash
+  const series = topCrimes.map(crime => ({
+      name: crime, // name: crime.length > 30 ? crime.substring(0, 30) + '...' : crime,
+      data: months.map(month => filteredMonthlyCrimeCounts[month][crime] || 0)
+  }));
+
+  // ApexCharts options
+  const options = {
+      chart: {
+          type: 'line',
+          height: 600,
+          zoom: {
+              enabled: true
+          },
+          toolbar: {
+              tools: {
+                  download: false,
+                  selection: true,
+                  zoom: false,
+                  zoomin: false,
+                  zoomout: false,
+                  pan: false,
+                  reset: false
+              }
+          },
+          events: {
+              legendClick: function(chartContext, seriesIndex, config) {
+                const fullSeriesName = config.config.series[seriesIndex].name;
+                aiAdvice(fullSeriesName);
+
+                const myModal = new bootstrap.Modal(document.getElementById('legendModal'));
+                myModal.show();
+
+                return false; // chiziqni yashirishni bloklash
+              }
+          }
+      },
+      dataLabels: {
+          enabled: true
+      },
+      title: {
+        text: 'Чилонзор туманидаги жиноятларнинг вақт бўйича таҳлили',
+        align: 'center',
+        style: {
+          fontSize:  '18px',
+          fontWeight:  'bold',
+          fontFamily:  undefined,
+          color:  '#fff'
         },
-        dataLabels: {
-            enabled: false
+      },
+      stroke: {
+          curve: 'smooth',
+          width: 3
+      },
+      series: series,
+      xaxis: {
+          categories: months,
+          labels: {
+              style: {
+                  colors: '#ffffff'
+              }
+          }
+      },
+      yaxis: {
+          labels: {
+              style: {
+                  colors: '#ffffff'
+              }
+          }
+      },
+      tooltip: {
+          enabled: true,
+          shared: false,
+          intersect: false,
+          style: {
+              fontSize: '12px'
+          },
+          y: {
+              formatter: function(value) {
+                  return value + " ta";
+              }
+          }
+      },
+      legend: {
+        show: true,
+        position: 'right',
+        horizontalAlign: 'left',
+        fontSize: '14px',
+        labels: {
+            colors: '#fff',
+            useSeriesColors: false,
         },
-        stroke: {
-            curve: 'smooth',
-            width: 3
+        markers: {
+            width: 10,
+            height: 10,
+            radius: 0,
+            offsetX: -5,
+            offsetY: 1,
+            shape: "line", // circle, square
         },
-        series: series,
-        xaxis: {
-            categories: months,
-            labels: {
-                style: {
-                    colors: '#ffffff'
-                }
-            }
+        itemMargin: {
+            horizontal: 10,
+            vertical: 5
         },
-        yaxis: {
-            labels: {
-                style: {
-                    colors: '#ffffff'
-                }
-            }
+        onItemClick: {
+            toggleDataSeries: true
         },
-        tooltip: {
-            enabled: true,
-            shared: false,
-            intersect: false,
-            style: {
-                fontSize: '12px'
-            },
-            y: {
-                formatter: function(value) {
-                    return value + " ta";
-                }
-            }
+        onItemHover: {
+            highlightDataSeries: true
         },
-        legend: {
-            show: true,
-            position: 'right',
-            horizontalAlign: 'left',
-            fontSize: '14px',
-            labels: {
-                colors: '#fff',
-                useSeriesColors: false,
-            },
-            markers: {
-                width: 10,
-                height: 10,
-                radius: 5,
-                offsetX: -5,
-                offsetY: 1
-            },
-            itemMargin: {
-                horizontal: 10,
-                vertical: 5
-            },
-            onItemClick: {
-                toggleDataSeries: true
-            },
-            onItemHover: {
-                highlightDataSeries: true
-            },
-            formatter: function(seriesName, opts) {
-                // Jinoyat nomlarini qisqartirish
-                // const maxLength = 25;
-                // return seriesName.length > maxLength ? 
-                //     seriesName.substring(0, maxLength) + '...' : 
-                //     seriesName;
-                return seriesName;
-            },
-            containerMargin: {
-                left: 10,
-                top: 20
-        }},
-        colors: ['#e74c3c', '#3498db', '#f1c40f', '#2ecc71', '#9b59b6', 
-                '#1abc9c', '#d35400', '#34495e', '#e67e22', '#16a085'],
-        grid: {
-            borderColor: '#556d8f',
-            strokeDashArray: 4
+        formatter: function(seriesName, opts) {
+          const maxLength = 25;
+          return seriesName.length > maxLength ? 
+              seriesName.substring(0, maxLength) + '...' : 
+              seriesName;
+        },
+        containerMargin: {
+            left: 10,
+            top: 20
         }
-    };
+      },
+      colors: ['#e74c3c', '#3498db', '#f1c40f', '#2ecc71', '#9b59b6', 
+              '#1abc9c', '#d35400', '#34495e', '#e67e22', '#16a085'],
+      grid: {
+          borderColor: '#556d8f',
+          strokeDashArray: 4
+      }
+  };
 
-    // Avvalgi chartni yo'q qilish
-    if (window.chart12) {
-        window.chart12.destroy();
-    }
+  // Avvalgi chartni yo'q qilish
+  if (window.chart12) {
+      window.chart12.destroy();
+  }
 
-    // Yangi chart yaratish
-    window.chart12 = new ApexCharts(document.querySelector("#crime_types_date"), options);
-    window.chart12.render();
+  // Yangi chart yaratish
+  window.chart12 = new ApexCharts(document.querySelector("#crime_types_date"), options);
+  window.chart12.render();
 }
 
 //     fullMonthlyData = filteredData; // reset uchun saqlaymiz
@@ -747,10 +749,10 @@ neighborhood.addEventListener('change', applyFilters);
 window.addEventListener('load', function() {
   updateProgressBars();
     // initializeCrimeTimelineChart();
-    populateCrimeTypeFilter();
+  populateCrimeTypeFilter();
     // updateProgressBars();
     // initializeCrimeTimelineChart();
-    this.localStorage.setItem('rP', 3);
+  this.localStorage.setItem('rP', 3);
 });
 
 function aiAdvice(targetCrimeType){
@@ -771,7 +773,7 @@ function aiAdvice(targetCrimeType){
     document.getElementById('time_period').innerText = sorted[0].time;
     // return sorted;
   }
-  groupCrimeCountByTimeSorted(data3, 'Гийовандлик воситалари, уларнинг аналоглари йоки психотроп моддаларни ўтказиш мақсадини кўзламай қонунга хилоф равишда таййорлаш, эгаллаш, сақлаш ва бошқа ҳаракатлар ')
+  groupCrimeCountByTimeSorted(data3, targetCrimeType)
 
   // const result = groupCrimeCountByTimeSorted(data3, "Гийовандлик воситалари, уларнинг аналоглари йоки психотроп моддаларни ўтказиш мақсадини кўзламай қонунга хилоф равишда таййорлаш, эгаллаш, сақлаш ва бошқа ҳаракатлар ");
   // console.log(result);
@@ -807,7 +809,7 @@ function aiAdvice(targetCrimeType){
     document.getElementById('time_12_18').innerText = timeGroups['Kunduzi'];
     document.getElementById('time_18_24').innerText = timeGroups['Kechqurun'];
   }
-  groupCrimeByTimePeriod(data3, 'Гийовандлик воситалари, уларнинг аналоглари йоки психотроп моддаларни ўтказиш мақсадини кўзламай қонунга хилоф равишда таййорлаш, эгаллаш, сақлаш ва бошқа ҳаракатлар ')
+  groupCrimeByTimePeriod(data3, targetCrimeType)
 
   function generatePredictions() {
       const predictionBody = document.getElementById('predictionBody');

@@ -535,80 +535,18 @@
                     </div>
                     <div class="col-12">
                         <div class="mx-auto d-flex gap-2 px-5">
-                            <select id="yearSelect" class="form-control"></select>
+                            <select id="yearSelect" class="form-control">
+                                <option value="">Barcha yillar</option>
+                            </select>
                             <select id="monthSelect" class="form-control">
-                                <option value="01">Yanvar</option>
-                                <option value="02">Fevral</option>
-                                <option value="03">Mart</option>
-                                <option value="04">Aprel</option>
-                                <option value="05">May</option>
-                                <option value="06">Iyun</option>
-                                <option value="07">Iyul</option>
-                                <option value="08">Avgust</option>
-                                <option value="09">Sentabr</option>
-                                <option value="10">Oktabr</option>
-                                <option value="11">Noyabr</option>
-                                <option value="12">Dekabr</option>
+                                <option value="">Barcha oylar</option>
                             </select>
-                            <select id="neighborhood" class="form-control">
-                                <option value="01">Sharq</option>
-                                <option value="02">Sharaf</option>
-                                <option value="03">Xontupi</option>
-                                <option value="04">Sharq tongi</option>
-                                <option value="05">Guliston</option>
-                                <option value="06">Bahoriston</option>
-                                <option value="07">Al-Xorazmiy</option>
-                                <option value="08">Bektupi</option>
-                                <option value="09">Tirsakobod</option>
-                                <option value="10">Xayrabod</option>
-                                <option value="11">Katta Xirmontepa</option>
-                                <option value="12">Shuxrat</option>
-                                <option value="13">Beshyog'och</option>
-                                <option value="14">Katta Olmazor</option>
-                                <option value="15">Novza</option>
-                                <option value="16">1-Charx Kamalon</option>
-                                <option value="17">2-Charx Kamalon</option>
-                                <option value="18">3-Charx Kamalon</option>
-                                <option value="19">Katta Chilonzor-3</option>
-                                <option value="20">Katta Chilonzor-2</option>
-                                <option value="21">Katta Chilonzor-1</option>
-                                <option value="22">Katta Qozirobod</option>
-                                <option value="23">Qozirobod</option>
-                                <option value="24">Chilonzor</option>
-                                <option value="25">Oqtepa</option>
-                                <option value="26">Lutfiy</option>
-                                <option value="27">Bog'zor</option>
-                                <option value="28">1-Qatortol</option>
-                                <option value="29">Nafosat</option>
-                                <option value="30">Diyor</option>
-                                <option value="31">Qatortol</option>
-                                <option value="32">Navbahor</option>
-                                <option value="33">Katta Navbahor</option>
-                                <option value="34">Dilobod</option>
-                                <option value="35">Xalqlar Dustligi</option>
-                                <option value="36">Ko'tarma</option>
-                                <option value="37">Cho'panota</option>
-                                <option value="38">Ko'rkam</option>
-                                <option value="39">Beshchinor</option>
-                                <option value="40">Zarqo'rg'on</option>
-                                <option value="41">Fidokor</option>
-                                <option value="42">Botirma</option>
-                                <option value="43">Mehrjon</option>
-                                <option value="44">Kichik Hurmontepa</option>
-                                <option value="45">Katta Durmbirobod</option>
-                                <option value="46">Dumbirobod</option>
-                                <option value="47">Gavhar</option>
-                                <option value="48">Naqqoshlik</option>
-                                <option value="49">2-Qatartol</option>
-                                <option value="50">Mevazor</option>
-                                <option value="51">Yakkabog'</option>
-                                <option value="52">Bo'rijar</option>
-                                <option value="53">Yakkatut</option>
-                                <option value="54">Beshqo'rg'on</option>
+                            <select id="neighborhoodSelect" class="form-control">
+                                <option value="">Чилонзор тумани</option>
                             </select>
-                            <button id="resetChartBtn" class="btn btn-outline-primary align-items-center gap-2" style="display: none;"><i class="fa-solid fa-reply mr-2"></i> Ortga</button>
+                            <button id="resetChartBtn" class="btn btn-outline-danger d-flex align-items-center gap-2" onclick="clearFilters()"><i class="fa-solid fa-reply mr-2"></i> Ortga</button>
                         </div>                        
-                        <div id="crime_types_date"></div>
+                        <!-- <div id="crime_types_date"></div> -->
                         <div id="crime_types_date_neighborhood"></div>
                     </div>
                     <div class="col-3 d-none">
@@ -706,80 +644,640 @@
 
     <!-- Modal -->
     <div class="modal fade" id="legendModal" tabindex="-1" aria-labelledby="legendModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="legendModalLabel">Жиноят диагностикаси</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Yopish"></button>
+                    <h5 class="modal-title" id="legendModalLabel">
+                        <i class="bi bi-graph-up me-2"></i>Жиноят диагностикаси ва бошоратлар
+                    </h5>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Yopish"></button> -->
                 </div>
-                <div class="modal-body" id="modalBody">
-                    <h5 class="text-center fw-bold text-uppercase mb-3 text-primary">Bashorat qilingan jinoyatlar</h5>
-                    <table id="predictionTable" class="table">
-                        <thead>
-                            <tr>
-                                <th>Tuman</th>
-                                <th>Bashorat Qilingan Jinoyat Turi</th>
-                                <th>Xavf Darajasi</th>
-                                <th>Xavfli Vaqt Oraligi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="predictionBody">
-                        </tbody>
-                    </table>
-                    <strong class="text-center text-primary">Vaqt bo'yicha diagnostika</strong>
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th scope="col">Vaqt oralig'i</th>
-                                <th scope="col">Jinoyatlar soni</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td scope="row">Tun (00:00-06:00)</td>
-                                <td id="time_0_6">Mark</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Ertalab (06:00-12:00)</td>
-                                <td id="time_6_12">Jacob</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Kunduzi (12:00-18:00)</td>
-                                <td id="time_12_18">Larry</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Kechqurun (18:00-24:00)</td>
-                                <td id="time_18_24">Larry</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="modal-body">
+                    <nav class="modal-navbar">
+                        <ul class="nav nav-tabs" id="modalTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab">
+                                    <i class="bi bi-speedometer2 me-1"></i>Умумий кўриниш
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="predictions-tab" data-bs-toggle="tab" data-bs-target="#predictions" type="button" role="tab">
+                                    <i class="bi bi-graph-up-arrow me-1"></i>Бошоратлар
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="time-tab" data-bs-toggle="tab" data-bs-target="#timeAnalysis" type="button" role="tab">
+                                    <i class="bi bi-clock-history me-1"></i>Вақт таҳлили
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="location-tab" data-bs-toggle="tab" data-bs-target="#locationAnalysis" type="button" role="tab">
+                                    <i class="bi bi-geo-alt me-1"></i>Жойлашув таҳлили
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="prevention-tab" data-bs-toggle="tab" data-bs-target="#prevention" type="button" role="tab">
+                                    <i class="bi bi-shield-check me-1"></i>Олдини олиш чоралари
+                                </button>
+                            </li>
+                        </ul>
+                    </nav>
                     
-                    <h5 class="text-center fw-bold text-uppercase" style="color: rgb(12, 95, 151);">Jinoyatlarning oldini olish choralari</h5>
-                    <!-- <b>Tavsiya Etilgan Oldini Olish Choralari</b> -->
-                    <ul class="list-unstyled p-3">
-                        <li><strong class="bg-danger rounded p-1 text-light fs-5" id="time_period"></strong> vaqtida politsiya patrullarini ko'paytirish, 
-                            maktablar va mahalla markazlarida giyohvandlik haqida ogohlantirish kampaniyalarini o'tkazish, 
-                            shuningdek, mahalla posbonlik dasturlarini joriy etish.
-                        </li>
-                        <li><strong class="district-tag bg-success rounded p-1 text-light fs-5">Chilonzor</strong> - eng ko'p jinoyat sodir bo'ladigan tuman (<b>34</b> ta hodisa).</li>
-                        <li>
-                            <h3 class="text-uppercase text-center">Umumiy Oldini Olish Choralari</h3>
-                            <ul class="list-unstyled px-3">
-                                <li>Mahalliylashtirilgan politsiya xizmati dasturlarini joriy etish</li>
-                                <li>Fuqarolar jinoyatlar va shubhali harakatlar haqida anonim xabar berish uchun mobil ilovalarni ishlab chiqish</li>
-                                <li>Jinoyat ko'p sodir bo'ladigan joylarga qo'shimcha kuzatuv kameralarini o'rnatish</li>
-                                <li>Xavfsizlik muammolari va ularning yechimlari muhokamasi uchun muntazam mahalla yig'ilishlarini o'tkazish</li>
-                                <li>Xavf ostidagi yoshlar uchun kasbiy ta'lim va ish bilan ta'minlash dasturlarini tashkil etish</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <!-- <div class="chart-container"> -->
-                    
-                <!-- </div> -->
+                    <div class="tab-content" id="modalTabContent">
+                        <!-- Overview Tab -->
+                        <div class="tab-pane fade show active" id="overview" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="crime-trend-chart-container">
+                                        <div id="crimeTrendChart"></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="crime-risk-summary">
+                                        <h5 class="section-title">Жиноят хавфи таҳлили</h5>
+                                        <div class="risk-level-card">
+                                            <div class="risk-level-header">
+                                                <span class="risk-label">Хавф даражаси:</span>
+                                                <span class="risk-value risk-critical">Ўта оғир</span>
+                                            </div>
+                                            <div class="risk-meter">
+                                                <div class="risk-meter-fill" style="width: 85%;"></div>
+                                            </div>
+                                            <div class="risk-description">
+                                                Бу жиноят тури бўйича хавф даражаси юқори. Соңги 4 ойда 85%га ўсиб бормоқда.
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="crime-stats-grid">
+                                            <div class="stat-card">
+                                                <div class="stat-icon">
+                                                    <i class="bi bi-calendar-week"></i>
+                                                </div>
+                                                <div class="stat-info">
+                                                    <div class="stat-label">Энг кўп содир бўладиган ой</div>
+                                                    <div class="stat-value">Март</div>
+                                                </div>
+                                            </div>
+                                            <div class="stat-card">
+                                                <div class="stat-icon">
+                                                    <i class="bi bi-clock"></i>
+                                                </div>
+                                                <div class="stat-info">
+                                                    <div class="stat-label">Энг кўп содир бўладиган вақт</div>
+                                                    <div class="stat-value">18:00-22:00</div>
+                                                </div>
+                                            </div>
+                                            <div class="stat-card">
+                                                <div class="stat-icon">
+                                                    <i class="bi bi-geo"></i>
+                                                </div>
+                                                <div class="stat-info">
+                                                    <div class="stat-label">Энг кўп содир бўладиган маҳалла</div>
+                                                    <div class="stat-value">Қозиробод</div>
+                                                </div>
+                                            </div>
+                                            <div class="stat-card">
+                                                <div class="stat-icon">
+                                                    <i class="bi bi-graph-up-arrow"></i>
+                                                </div>
+                                                <div class="stat-info">
+                                                    <div class="stat-label">Тренд (соңги 3 ой)</div>
+                                                    <div class="stat-value trend-up">+15%</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Add this inside the modal body, after the existing tabs -->
+                        <div class="tab-pane fade" id="predictions" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="prediction-header">
+                                        <h5 class="section-title">Келгусидаги 7 кун учун жиноятлар бошорати</h5>
+                                        <div class="prediction-filters">
+                                            <select id="predictionNeighborhood" class="form-control form-control-sm">
+                                                <option value="all">Барча маҳаллалар</option>
+                                                <option value="Qozirobod">Қозиробод</option>
+                                                <option value="Al-Xorazmiy">Ал-Хоразмий</option>
+                                                <option value="Beshog'och">Бешёғоч</option>
+                                                <option value="Mehrjon">Меҳржон</option>
+                                            </select>
+                                            <select id="predictionDay" class="form-control form-control-sm">
+                                                <option value="all">Барча кунлар</option>
+                                                <option value="Dushanba">Душанба</option>
+                                                <option value="Seshanba">Сешанба</option>
+                                                <option value="Chorshanba">Чоршанба</option>
+                                                <option value="Payshanba">Пайшанба</option>
+                                                <option value="Juma">Жума</option>
+                                                <option value="Shanba">Шанба</option>
+                                                <option value="Yakshanba">Якшанба</option>
+                                            </select>
+                                            <select id="predictionTime" class="form-control form-control-sm">
+                                                <option value="all">Барча вақтлар</option>
+                                                <option value="00:00-06:00">Тун (00:00-06:00)</option>
+                                                <option value="06:00-12:00">Эрталаб (06:00-12:00)</option>
+                                                <option value="12:00-18:00">Кундузи (12:00-18:00)</option>
+                                                <option value="18:00-24:00">Кечқурун (18:00-24:00)</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="prediction-grid">
+                                        <div class="prediction-card prediction-high">
+                                            <div class="prediction-card-header">
+                                                <div class="prediction-risk">ЮқОРИ ХАВФ</div>
+                                                <div class="prediction-title">Қозиробод маҳалласи, Жума күни, 18:00-22:00</div>
+                                            </div>
+                                            <div class="prediction-content">
+                                                <div class="prediction-crime">
+                                                    <i class="bi bi-exclamation-triangle-fill"></i>
+                                                    <span>Ўғирлик жиноятлари</span>
+                                                </div>
+                                                <div class="prediction-stats">
+                                                    <div class="prediction-stat">
+                                                        <span class="stat-label">Эҳтимоллик:</span>
+                                                        <span class="stat-value">85%</span>
+                                                    </div>
+                                                    <div class="prediction-stat">
+                                                        <span class="stat-label">Сонӣ бошорат:</span>
+                                                        <span class="stat-value">3-5 та</span>
+                                                    </div>
+                                                    <div class="prediction-stat">
+                                                        <span class="stat-label">Қайд этилган жиноятлар:</span>
+                                                        <span class="stat-value">12 та (соңги 4 хафтада)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="prediction-card prediction-medium">
+                                            <div class="prediction-card-header">
+                                                <div class="prediction-risk">ЎРТА ХАВФ</div>
+                                                <div class="prediction-title">Ал-Хоразмий маҳалласи, Шанба күни, 12:00-18:00</div>
+                                            </div>
+                                            <div class="prediction-content">
+                                                <div class="prediction-crime">
+                                                    <i class="bi bi-exclamation-triangle"></i>
+                                                    <span>Наркотик моддалар билан боглик жиноятлар</span>
+                                                </div>
+                                                <div class="prediction-stats">
+                                                    <div class="prediction-stat">
+                                                        <span class="stat-label">Эҳтимоллик:</span>
+                                                        <span class="stat-value">65%</span>
+                                                    </div>
+                                                    <div class="prediction-stat">
+                                                        <span class="stat-label">Сонӣ бошорат:</span>
+                                                        <span class="stat-value">1-2 та</span>
+                                                    </div>
+                                                    <div class="prediction-stat">
+                                                        <span class="stat-label">Қайд этилган жиноятлар:</span>
+                                                        <span class="stat-value">8 та (соңги 4 хафтада)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- More prediction cards would go here -->
+                                    </div>
+                                    
+                                    <div class="prediction-map-container">
+                                        <h6 class="map-title">Жиноятлар бошорати харитаси</h6>
+                                        <div id="predictionMap" style="height: 400px; border-radius: 8px;"></div>
+                                        <!-- <div class="map-legend text-light">
+                                            <div class="legend-item">
+                                                <span class="legend-color high-risk"></span>
+                                                <span class="legend-label">Юқори хавф (70-100%)</span>
+                                            </div>
+                                            <div class="legend-item">
+                                                <span class="legend-color medium-risk"></span>
+                                                <span class="legend-label">Ўрта хавф (40-70%)</span>
+                                            </div>
+                                            <div class="legend-item">
+                                                <span class="legend-color low-risk"></span>
+                                                <span class="legend-label">Паст хавф (0-40%)</span>
+                                            </div>
+                                        </div> -->
+                                        <div id="card-container" class="mt-2"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Time Analysis Tab -->
+                        <div class="tab-pane fade" id="timeAnalysis" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div id="timePatternChart"></div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="time-highlight-card">
+                                        <h5 class="time-highlight-title">Энг кўп жиноят содир бўладиган вақт</h5>
+                                        <div class="time-highlight-value">Кундузи (12:00-18:00)</div>
+                                        <div class="time-highlight-percent">35%</div>
+                                        <p class="time-highlight-desc">
+                                            Жиноятларнинг 35% қисми ана шу вақтда содир этилган. 
+                                            Бу вақт оралиғида қўшимча патруллаш ва назоратни кучayтириш тавсия этилади.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="time-distribution">
+                                        <h6>Жиноятларнинг кун бошига тақсимланиши</h6>
+                                        <div class="time-dist-item">
+                                            <span class="time-label">Тун (00:00-06:00)</span>
+                                            <div class="time-bar-container">
+                                                <div class="time-bar" style="width: 20%;"></div>
+                                            </div>
+                                            <span class="time-percent">20%</span>
+                                        </div>
+                                        <div class="time-dist-item">
+                                            <span class="time-label">Эрталаб (06:00-12:00)</span>
+                                            <div class="time-bar-container">
+                                                <div class="time-bar" style="width: 15%;"></div>
+                                            </div>
+                                            <span class="time-percent">15%</span>
+                                        </div>
+                                        <div class="time-dist-item">
+                                            <span class="time-label">Кундузи (12:00-18:00)</span>
+                                            <div class="time-bar-container">
+                                                <div class="time-bar" style="width: 35%;"></div>
+                                            </div>
+                                            <span class="time-percent">35%</span>
+                                        </div>
+                                        <div class="time-dist-item">
+                                            <span class="time-label">Кечқурун (18:00-24:00)</span>
+                                            <div class="time-bar-container">
+                                                <div class="time-bar" style="width: 30%;"></div>
+                                            </div>
+                                            <span class="time-percent">30%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Location Analysis Tab -->
+                        <div class="tab-pane fade" id="locationAnalysis" role="tabpanel">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div id="neighborhoodCrimeChart"></div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="location-highlight-card">
+                                        <h5 class="location-highlight-title">Энг кўп жиноят содир бўладиган маҳалла</h5>
+                                        <div class="location-highlight-value">Қозиробод</div>
+                                        <div class="location-highlight-percent">28%</div>
+                                        <p class="location-highlight-desc">
+                                            Бу маҳаллада жиноятларнинг 28% қисми содир этилган. 
+                                            Айниқса ўғирлик ва талончилик жиноятлари кўп қайд этилган.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="neighborhood-list">
+                                        <h6>Маҳаллалар бўйича жиноятлар тақсимланиши</h6>
+                                        <div class="neighborhood-item">
+                                            <span class="neighborhood-name">Қозиробод</span>
+                                            <div class="neighborhood-bar-container">
+                                                <div class="neighborhood-bar" style="width: 28%;"></div>
+                                            </div>
+                                            <span class="neighborhood-count">28% (24 та)</span>
+                                        </div>
+                                        <div class="neighborhood-item">
+                                            <span class="neighborhood-name">Ал-Хоразмий</span>
+                                            <div class="neighborhood-bar-container">
+                                                <div class="neighborhood-bar" style="width: 22%;"></div>
+                                            </div>
+                                            <span class="neighborhood-count">22% (19 та)</span>
+                                        </div>
+                                        <div class="neighborhood-item">
+                                            <span class="neighborhood-name">Бешёғоч</span>
+                                            <div class="neighborhood-bar-container">
+                                                <div class="neighborhood-bar" style="width: 18%;"></div>
+                                            </div>
+                                            <span class="neighborhood-count">18% (15 та)</span>
+                                        </div>
+                                        <div class="neighborhood-item">
+                                            <span class="neighborhood-name">Меҳржон</span>
+                                            <div class="neighborhood-bar-container">
+                                                <div class="neighborhood-bar" style="width: 15%;"></div>
+                                            </div>
+                                            <span class="neighborhood-count">15% (13 та)</span>
+                                        </div>
+                                        <div class="neighborhood-item">
+                                            <span class="neighborhood-name">Бошқалари</span>
+                                            <div class="neighborhood-bar-container">
+                                                <div class="neighborhood-bar" style="width: 17%;"></div>
+                                            </div>
+                                            <span class="neighborhood-count">17% (14 та)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Prevention Tab -->
+                        <div class="tab-pane fade" id="prevention" role="tabpanel">
+                            <div class="prevention-tab-content">
+                                <h4 class="prevention-header">Жиноятларни олдини олиш бўйича таклифлар</h4>
+                                
+                                <div class="prevention-priority">
+                                    <div class="priority-card priority-high">
+                                        <div class="priority-header">
+                                            <i class="bi bi-exclamation-triangle-fill"></i>
+                                            <h5>Дарҳол амалга ошириш керак бўлган чоралар</h5>
+                                        </div>
+                                        <ul class="prevention-list">
+                                            <li class="prevention-item">
+                                                <i class="bi bi-check-circle-fill prevention-item-icon"></i>
+                                                <span class="prevention-item-text">Қозиробод маҳалласида 18:00-22:00 оралиғида қўшимча патруллашни ташкил этиш</span>
+                                            </li>
+                                            <li class="prevention-item">
+                                                <i class="bi bi-check-circle-fill prevention-item-icon"></i>
+                                                <span class="prevention-item-text">Маҳалланинг хавфли жойларига қўшимча кузатув камераларини ўрнатиш</span>
+                                            </li>
+                                            <li class="prevention-item">
+                                                <i class="bi bi-check-circle-fill prevention-item-icon"></i>
+                                                <span class="prevention-item-text">Нурлантириш тизимини яхшилаш</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="priority-card priority-medium">
+                                        <div class="priority-header">
+                                            <i class="bi bi-clock-fill"></i>
+                                            <h5>Қисқа муддатли чоралар</h5>
+                                        </div>
+                                        <ul class="prevention-list">
+                                            <li class="prevention-item">
+                                                <i class="bi bi-check-circle-fill prevention-item-icon"></i>
+                                                <span class="prevention-item-text">Маҳалла фаоллари билан жиноятларни олдини олиш бўйича йиғилиш ўтказиш</span>
+                                            </li>
+                                            <li class="prevention-item">
+                                                <i class="bi bi-check-circle-fill prevention-item-icon"></i>
+                                                <span class="prevention-item-text">Ёшлар орасида профилактик ишларни кучayтириш</span>
+                                            </li>
+                                            <li class="prevention-item">
+                                                <i class="bi bi-check-circle-fill prevention-item-icon"></i>
+                                                <span class="prevention-item-text">Хавфсизлик бўйича эслатмаларни тарқатиш</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="priority-card priority-low">
+                                        <div class="priority-header">
+                                            <i class="bi bi-calendar-check-fill"></i>
+                                            <h5>Узоқ муддатли чоралар</h5>
+                                        </div>
+                                        <ul class="prevention-list">
+                                            <li class="prevention-item">
+                                                <i class="bi bi-check-circle-fill prevention-item-icon"></i>
+                                                <span class="prevention-item-text">Маҳаллада ишсизларни иш билан таъминлаш дастурларини ишга солиш</span>
+                                            </li>
+                                            <li class="prevention-item">
+                                                <i class="bi bi-check-circle-fill prevention-item-icon"></i>
+                                                <span class="prevention-item-text">Ёшлар учун спорт майдончалари ва ижтимоий марказларни барпо этиш</span>
+                                            </li>
+                                            <li class="prevention-item">
+                                                <i class="bi bi-check-circle-fill prevention-item-icon"></i>
+                                                <span class="prevention-item-text">Оилавий муаммоларни ҳал этиш бўйича консултация марказларини ташкил этиш</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="prevention-resources">
+                                    <h5 class="resources-title">Қўшимча манбалар ва алоқалар</h5>
+                                    <div class="resources-grid">
+                                        <a href="#" class="resource-card">
+                                            <i class="bi bi-file-earmark-text"></i>
+                                            <span>Жиноятларни олдини олиш бўйича методик қўлланма</span>
+                                        </a>
+                                        <a href="#" class="resource-card">
+                                            <i class="bi bi-telephone"></i>
+                                            <span>Хавфсизлик хизмати билан боғланиш</span>
+                                        </a>
+                                        <a href="#" class="resource-card">
+                                            <i class="bi bi-people"></i>
+                                            <span>Маҳалла фаоллари билан боғланиш</span>
+                                        </a>
+                                        <a href="#" class="resource-card">
+                                            <i class="bi bi-map"></i>
+                                            <span>Хавфли жойлар харитаси</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <style>
+    /* Risk Level Badges */
+    .risk-badge {
+        display: inline-block;
+        padding: 0.35rem 0.75rem;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .risk-critical {
+        background: linear-gradient(135deg, #ff0000 0%, #c62828 100%);
+        color: #fff;
+    }
+
+    .risk-high {
+        background: linear-gradient(135deg, #ff5252 0%, #d32f2f 100%);
+        color: #fff;
+    }
+
+    .risk-medium {
+        background: linear-gradient(135deg, #ffab40 0%, #ff6d00 100%);
+        color: #fff;
+    }
+
+    .risk-low {
+        background: linear-gradient(135deg, #69f0ae 0%, #00c853 100%);
+        color: #fff;
+    }
+
+    /* Percentage Colors */
+    .percent-critical {
+        color: #ff0000;
+        font-weight: bold;
+    }
+
+    .percent-high {
+        color: #ff5252;
+        font-weight: bold;
+    }
+
+    .percent-medium {
+        color: #ffab40;
+        font-weight: bold;
+    }
+
+    .percent-low {
+        color: #69f0ae;
+        font-weight: bold;
+    }
+
+    /* Trend Indicators */
+    .trend-indicator {
+        display: inline-flex;
+        align-items: center;
+        font-weight: 600;
+    }
+
+    .trend-up {
+        color: #ff5252;
+    }
+
+    .trend-down {
+        color: #69f0ae;
+    }
+
+    .trend-neutral {
+        color: #ffab40;
+    }
+
+    .trend-icon {
+        margin-right: 0.3rem;
+        font-size: 0.9rem;
+    }
+
+    /* Prevention Cards */
+    .prevention-tab-content {
+        padding: 1rem;
+    }
+
+    .prevention-header {
+        color: #ffffff;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .prevention-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1rem;
+    }
+
+    .prevention-card {
+        background: rgba(30, 60, 114, 0.3);
+        border-radius: 8px;
+        padding: 1.25rem;
+        border-left: 4px solid #4a90e2;
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+
+    .prevention-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        background: rgba(30, 60, 114, 0.4);
+    }
+
+    .prevention-card-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .prevention-card-icon {
+        width: 40px;
+        height: 40px;
+        background: rgba(74, 144, 226, 0.2);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        color: #4a90e2;
+        font-size: 1.2rem;
+    }
+
+    .prevention-card-title {
+        font-weight: 600;
+        color: #ffffff;
+        margin: 0;
+        font-size: 1.1rem;
+    }
+
+    .prevention-list {
+        list-style-type: none;
+        padding-left: 0;
+        margin-bottom: 0;
+    }
+
+    .prevention-item {
+        padding: 0.5rem 0;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.962);
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .prevention-item:last-child {
+        border-bottom: none;
+    }
+
+    .prevention-item-icon {
+        color: #4a90e2;
+        margin-right: 0.75rem;
+        font-size: 0.9rem;
+        margin-top: 0.2rem;
+    }
+
+    .prevention-item-text {
+        font-size: 0.9rem;
+        line-height: 1.4;
+        color: #4a90e2;
+    }
+
+    /* Time Highlight Card */
+    .time-highlight-card {
+        background: rgba(30, 60, 114, 0.3);
+        border-radius: 8px;
+        padding: 1.25rem;
+        margin-top: 1.5rem;
+        border-left: 4px solid #4a90e2;
+    }
+
+    .time-highlight-title {
+        font-weight: 600;
+        color: #4a90e2;
+        margin-bottom: 0.75rem;
+    }
+
+    .time-highlight-value {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #fff;
+        background: rgba(74, 144, 226, 0.2);
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        display: inline-block;
+        margin: 0.5rem 0;
+    }
+
+    .time-highlight-desc {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.9rem;
+        margin-bottom: 0;
+    }
+    </style> 
     
     <footer class="d-none">
         <div class="f-group d-flex column-gap-3 px-2">
@@ -789,6 +1287,46 @@
         </div>        
     </footer>
 
+      <!-- <script>
+        // Modalni ishga tushirish
+        let legendModal = null;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Modalni initsializatsiya qilish
+            legendModal = new bootstrap.Modal(document.getElementById('legendModal'));
+            
+            // Chart legendasiga click event qo'shish
+            document.addEventListener('click', function(e) {
+                if (e.target.closest('.apexcharts-legend-series')) {
+                    const seriesName = e.target.closest('.apexcharts-legend-series')
+                                    .querySelector('.apexcharts-legend-text').textContent;
+                    showCrimeModal(seriesName);
+                }
+            });
+        });
+
+        function showCrimeModal(crimeType) {
+            // Modal kontentini yangilash
+            updateModalContent(crimeType);
+            
+            // Modalni ko'rsatish
+            if (legendModal) {
+                legendModal.show();
+            } else {
+                console.error("Modal not initialized");
+                // Qayta urinish
+                legendModal = new bootstrap.Modal(document.getElementById('legendModal'));
+                legendModal.show();
+            }
+        }
+
+        function updateModalContent(crimeType) {
+            // Bu funksiyada modal contentini yangilash kodi bo'ladi
+            console.log("Selected crime type:", crimeType);
+            // ... qolgan funksiyalar
+        }
+        </script> -->
+
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     <script src="offline_modules/yandex-map" type="text/javascript"></script>
     <script src="offline_modules/bootstrap-5.3.6-dist/js/bootstrap.bundle.min.js"></script>
@@ -796,7 +1334,7 @@
     <script src="offline_modules/chartjs-plugin-datalabels"></script>
     <script src="js/data3.js"></script>
     <script src="js/chilonzor-map.js"></script>
-    <script src="js/script2.js"></script>
+    <script src="js/script.js"></script>
     <script src="js/data2.js"></script>
     <script src="js/map2.js"></script>
 </body>
